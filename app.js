@@ -1,10 +1,22 @@
 function sortear(){
-    let quantidade = document.getElementById("quantidade").value;
-    let de = document.getElementById("de").value;
-    let ate = document.getElementById("ate").value;   
+    let quantidade = parseInt(document.getElementById("quantidade").value);
+    let de = parseInt(document.getElementById("de").value);
+    let ate = parseInt(document.getElementById("ate").value);   
     
     let sorteados = [];
     let numero;
+
+    if (de > ate) {
+        alert("Ops, o valor mínimo ultrapassou o valor máximo. Por favor, tente novamente.");
+        reiniciar();
+        return;
+    }
+    
+    if (quantidade > (ate - de)){
+        alert("Ops, a quantidade esta maior do que deveria. Por favor, tente novamente.");
+        reiniciar();
+        return;
+    }
 
     for (let i = 0; i < quantidade; i++) {
         let numero = gerarNumeroAleatorio(de, ate);
@@ -12,9 +24,9 @@ function sortear(){
     while (sorteados.includes(numero)) {
         numero = gerarNumeroAleatorio(de, ate);
     }
-
     sorteados.push(numero);
-    }   
+    }
+    
     let resultado = document.getElementById("resultado");
     resultado.innerHTML = `<label class="texto__paragrafo">Números sorteados: ${sorteados} </label>
                 </div>`;

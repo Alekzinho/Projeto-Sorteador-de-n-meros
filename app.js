@@ -1,4 +1,13 @@
 function sortear(){
+    
+    sortearNovaente();
+    
+    let botao = document.getElementById("btn-reiniciar");
+    if (botao.classList.contains("container__botao-desabilitado")) {
+        botao.classList.remove("container__botao-desabilitado");
+        botao.classList.add("container__botao");
+    }
+
     let quantidade = parseInt(document.getElementById("quantidade").value);
     let de = parseInt(document.getElementById("de").value);
     let ate = parseInt(document.getElementById("ate").value);   
@@ -8,13 +17,11 @@ function sortear(){
 
     if (de > ate) {
         alert("Ops, o valor mínimo ultrapassou o valor máximo. Por favor, tente novamente.");
-        reiniciar();
         return;
     }
     
     if (quantidade > (ate - de + 1)){
         alert("Ops, a quantidade esta maior do que deveria. Por favor, tente novamente.");
-        reiniciar();
         return;
     }
 
@@ -28,9 +35,8 @@ function sortear(){
     }
     
     let resultado = document.getElementById("resultado");
-    resultado.innerHTML = `<label class="texto__paragrafo">Números sorteados: ${sorteados} </label>
-                </div>`;
-    alterarStatusBotao();
+    resultado.innerHTML = `<label class="texto__paragrafo">Números sorteados: ${sorteados} </label></div>`;
+
 }
 
 function gerarNumeroAleatorio(min, max){
@@ -53,7 +59,14 @@ function reiniciar(){
     document.getElementById("quantidade").value = "";
     document.getElementById("de").value = "";
     document.getElementById("ate").value = "";
-    document.getElementById("resultado").innerHTML = `<label class="texto__paragrafo">Números sorteados: nenhum até agora </label>
-                </div>`;
+    document.getElementById("resultado").innerHTML = `<label class="texto__paragrafo">Números sorteados: nenhum até agora </label></div>`;
+    document.getElementById("btn-sortear").innerHTML = "Sortear";
     alterarStatusBotao();
+
+}
+
+
+function sortearNovaente() {
+    let sortearDeNovo = document.getElementById("btn-sortear");
+    sortearDeNovo.innerHTML = "Sortear Novamente";
 }

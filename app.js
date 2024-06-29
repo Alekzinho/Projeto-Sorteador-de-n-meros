@@ -2,7 +2,7 @@ function sortear(){
     let quantidade = parseInt(document.getElementById("quantidade").value);
     let de = parseInt(document.getElementById("de").value);
     let ate = parseInt(document.getElementById("ate").value);   
-    
+
     let sorteados = [];
     let numero;
 
@@ -12,7 +12,7 @@ function sortear(){
         return;
     }
     
-    if (quantidade > (ate - de)){
+    if (quantidade > (ate - de + 1)){
         alert("Ops, a quantidade esta maior do que deveria. Por favor, tente novamente.");
         reiniciar();
         return;

@@ -1,72 +1,71 @@
-function sortear(){
-    
-    sortearNovaente();
-    
-    let botao = document.getElementById("btn-reiniciar");
-    if (botao.classList.contains("container__botao-desabilitado")) {
-        botao.classList.remove("container__botao-desabilitado");
-        botao.classList.add("container__botao");
-    }
+function sortear() {
 
-    let quantidade = parseInt(document.getElementById("quantidade").value);
-    let de = parseInt(document.getElementById("de").value);
-    let ate = parseInt(document.getElementById("ate").value);   
+    //Obtendo Ids e seus valores
+let quantidade = parseInt(document.getElementById("quantidade").value.trim());
+let de = parseInt(document.getElementById("de").value.trim());
+let ate = parseInt(document.getElementById("ate").value.trim());
+const mensagem = document.getElementById("mensagem");
 
-    let sorteados = [];
-    let numero;
+let numerosSorteados = [];
 
-    if (de > ate) {
-        alert("Ops, o valor mínimo ultrapassou o valor máximo. Por favor, tente novamente.");
-        return;
-    }
-    
-    if (quantidade > (ate - de + 1)){
-        alert("Ops, a quantidade esta maior do que deveria. Por favor, tente novamente.");
-        return;
-    }
+//Predefinindo valores
+if (isNaN(de)) {
+    de = 0;
+    document.getElementById("de").value = 0;
+     
+}
 
-    for (let i = 0; i < quantidade; i++) {
-        let numero = gerarNumeroAleatorio(de, ate);
+if (isNaN(quantidade)) {
+    quantidade = 1;
+    document.getElementById("quantidade").value = 1;
+}
 
-    while (sorteados.includes(numero)) {
-        numero = gerarNumeroAleatorio(de, ate);
+if (isNaN(ate)) {
+    ate = 10;
+    document.getElementById("ate").value = 10;
+}
+
+//Sorteando números 
+if (de > ate || quantidade == 0 || ate == 0) {
+    alert("Preenchimento inválido!");
+} else {
+    let i = 0;
+for (i = 0; i < quantidade; i++) {
+    let numeroAleatorio = gerarNumeroAleatorio(de, ate);
+
+    while (numerosSorteados.includes(numeroAleatorio) == true) {
+       numeroAleatorio =  gerarNumeroAleatorio(de,ate);
     }
-    sorteados.push(numero);
-    }
-    
-    let resultado = document.getElementById("resultado");
-    resultado.innerHTML = `<label class="texto__paragrafo">Números sorteados: ${sorteados} </label></div>`;
+    numerosSorteados.push(numeroAleatorio)
+    mensagem.textContent = `Números sorteados: ${numerosSorteados}.`
+}
+
+console.log(numerosSorteados, de, ate, quantidade);
+}
+
+alterarBotaoReiniciar();
 
 }
 
-function gerarNumeroAleatorio(min, max){
-   return Math.floor(Math.random() * (max - min + 1) + min);
-
+function gerarNumeroAleatorio(min,max) {
+    return parseInt(Math.random() * (max - min + 1) + min);
 }
 
-function alterarStatusBotao() {
-    let botao = document.getElementById("btn-reiniciar");
-    if (botao.classList.contains("container__botao-desabilitado")) {
-        botao.classList.remove("container__botao-desabilitado");
-        botao.classList.add("container__botao");
-    } else {
-        botao.classList.remove("container__botao");
-        botao.classList.add("container__botao-desabilitado");
-    }
+function alterarBotaoReiniciar() {
+    const botao = document.getElementById("btn-reiniciar");
+
+    botao.classList.remove("container__botao-desabilitado");
+    botao.classList.add("container__botao");
 }
 
-function reiniciar(){
+function reiniciar()  {
+    let botaoReiniciar = document.getElementById("btn-reiniciar");
+    botaoReiniciar.classList.remove("container__botao");
+    botaoReiniciar.classList.add("container__botao-desabilitado");
+
     document.getElementById("quantidade").value = "";
-    document.getElementById("de").value = "";
+    document.getElementById("de").value =  "";
     document.getElementById("ate").value = "";
-    document.getElementById("resultado").innerHTML = `<label class="texto__paragrafo">Números sorteados: nenhum até agora </label></div>`;
-    document.getElementById("btn-sortear").innerHTML = "Sortear";
-    alterarStatusBotao();
+    document.getElementById("mensagem").textContent = "Números sorteados:  nenhum até agora";
 
-}
-
-
-function sortearNovaente() {
-    let sortearDeNovo = document.getElementById("btn-sortear");
-    sortearDeNovo.innerHTML = "Sortear Novamente";
 }
